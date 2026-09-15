@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNX — Oportunidades Abertas para Propostas</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- TRAVA DE SEGURANÇA (REDIRECIONA PARA INDEX.HTML SE NÃO ESTIVER LOGADO) -->
+  <script>
+    const MODO_TRAVA_ATIVO = false; // Mude para true para ativar a trava rígida de login
+
+    if (MODO_TRAVA_ATIVO && !localStorage.getItem('cadastroConcluido')) {
+      alert('⚠️ Acesso restrito! Você precisa preencher o formulário de pré-qualificação antes de acessar as oportunidades.');
+      window.location.href = 'home.html';
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-50 flex flex-col justify-between">
+
+  <!-- BARRA SUPERIOR INSTITUCIONAL -->
+  <div class="bg-azul-bic text-white text-xs py-2 px-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <span>Somos o <strong>Portal de Compras da Petrobras</strong></span>
+      <div class="flex gap-4 items-center">
+        <span>Atendimento Especializado</span>
+        <span class="font-bold">CNX</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      
+      <!-- LOGO CNX (CLIQUE RECARREGA E LIMPA OS FILTROS DA TELA) -->
+      <a href="javascript:void(0)" onclick="recarregarELimparFiltros()" class="flex items-center gap-3 group cursor-pointer" title="Recarregar painel de oportunidades">
+        <span class="text-2xl font-black text-azul-bic tracking-tight group-hover:opacity-80">CNX</span>
+        <span class="text-slate-300">|</span>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-azul-bic transition-colors">Portal de Fornecedores</span>
+      </a>
+
+      <!-- MENU NAVEGAÇÃO -->
+      <nav class="hidden md:flex items-center gap-6 font-bold text-sm text-verde-petronect">
+        <a href="#" class="hover:underline">A CNX</a>
+        <a href="#" class="hover:underline">Cadastro de Fornecedores</a>
+        <a href="#" class="hover:underline">Compras e Contratações</a>
+        <a href="#" class="hover:underline">Ajuda</a>
+      </nav>
+
+      <!-- BOTÃO SAIR DA CONTA (REDIRECIONA PARA INDEX.HTML) -->
+      <button onclick="sairDoPainel()" class="px-5 py-2.5 bg-rose-600 text-white rounded-full text-xs font-bold hover:bg-rose-700 transition-colors shadow-sm">
+        SAIR DA CONTA
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="py-10 px-4 max-w-6xl mx-auto w-full space-y-8">
+    
+    <!-- TÍTULO PRINCIPAL -->
+    <div class="text-center space-y-2">
+      <h1 class="text-3xl md:text-5xl font-black text-azul-bic tracking-tight">
+        Lista de Oportunidades<br>Abertas para propostas
+      </h1>
+      <div class="w-24 h-1.5 bg-verde-petronect mx-auto rounded-full mt-2"></div>
+    </div>
+
+    <!-- DESCRITIVO -->
+    <div class="max-w-4xl mx-auto text-center text-xs md:text-sm text-slate-700 space-y-2">
+      <p>Aqui serão listadas as Oportunidades publicadas, que ainda não atingiram a data fim do período de envio de propostas.</p>
+      <p>Para buscar Oportunidades que não se enquadram nesse critério, utilize o menu <strong>Compras e Contratações &gt; Licitações Públicas</strong>, selecionando <span class="text-emerald-600 font-bold">"Em análise de propostas"</span> ou <span class="text-emerald-600 font-bold">"Concluídas"</span>.</p>
+    </div>
+
+    <!-- CAIXA DE FILTROS E BUSCA -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 max-w-4xl mx-auto space-y-6">
+      <div class="flex justify-center gap-4">
+        <button class="px-6 py-2 bg-verde-petronect text-white font-bold text-xs rounded-full border border-verde-petronect">
+          Busca por Campos
+        </button>
+        <button class="px-6 py-2 bg-white text-slate-600 font-bold text-xs rounded-full border border-slate-300 hover:bg-slate-50">
+          Busca Estruturada por Fornecimento
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-2xl md:text-3xl font-black text-center text-azul-bic tracking-tight">Lista de Publicações</h2>
+        
+        <div class="flex gap-2 max-w-xl mx-auto">
+          <input type="text" id="input-busca" onkeyup="filtrarEAtualizarPagina()" placeholder="Digite para buscar por objeto, código ou sub-status..." class="w-full bg-slate-100 border border-slate-200 rounded-full px-5 py-2.5 text-xs outline-none focus:border-azul-bic focus:bg-white transition-all">
+          <button onclick="filtrarEAtualizarPagina()" class="px-5 py-2.5 bg-azul-bic text-white rounded-full text-xs font-bold hover:bg-blue-900 transition-colors">🔍</button>
+        </div>
+
+        <div class="flex justify-center gap-3 pt-2">
+          <select id="select-abrangencia" onchange="filtrarEAtualizarPagina()" class="bg-slate-100 border border-slate-200 rounded-full px-4 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+            <option value="">Todas as Abrangências ▾</option>
+            <option value="Nacional">Nacional</option>
+            <option value="Internacional">Internacional</option>
+          </select>
+          <select id="select-local" onchange="filtrarEAtualizarPagina()" class="bg-slate-100 border border-slate-200 rounded-full px-4 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+            <option value="">Todos os Locais ▾</option>
+            <option value="Rio de Janeiro">Rio de Janeiro / RJ</option>
+            <option value="Macaé">Macaé / RJ</option>
+            <option value="Santos">Santos / SP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA DE OPORTUNIDADES -->
+    <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+      <div class="p-4 bg-slate-100 border-b border-slate-200 flex justify-between items-center">
+        <select class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-700 outline-none">
+          <option>Ordenação por Data Fim ▾</option>
+          <option>Ordenação por Data Início</option>
+        </select>
+        <span id="contador-resultados" class="text-xs font-bold text-slate-600">Exibindo página 1 (4 oportunidades por página)</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-azul-bic text-white font-bold">
+            <tr>
+              <th class="p-3">Número</th>
+              <th class="p-3">Objeto</th>
+              <th class="p-3">Sub-status</th>
+              <th class="p-3">Empresa</th>
+              <th class="p-3">Abrangência</th>
+              <th class="p-3">Data início</th>
+              <th class="p-3">Data fim</th>
+              <th class="p-3 text-center">Opções</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-800" id="tbody-oportunidades">
+            
+            <!-- PÁGINA 1 -->
+            <tr class="hover:bg-slate-50 item-oportunidade" data-pagina="1" data-abrangencia="Nacional" data-local="Rio de Janeiro">
+              <td class="p-3 font-bold text-azul-bic">7004597246</td>
+              <td class="p-3">Aquisição de Clarificante a base de Carbonato de Cálcio</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">11/05/2026</td>
+              <td class="p-3">09/10/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade" data-pagina="1" data-abrangencia="Nacional" data-local="Macaé">
+              <td class="p-3 font-bold text-azul-bic">7004609122</td>
+              <td class="p-3">Aquisição de Conjuntos de Sistema de Tubulações Válvula Flange</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">08/06/2026</td>
+              <td class="p-3">01/10/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade" data-pagina="1" data-abrangencia="Internacional" data-local="Santos">
+              <td class="p-3 font-bold text-azul-bic">7004609337</td>
+              <td class="p-3">Serviços de prontidão e resposta a emergências ambientais marítimas</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Internacional</td>
+              <td class="p-3">08/06/2026</td>
+              <td class="p-3">17/09/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade" data-pagina="1" data-abrangencia="Nacional" data-local="Rio de Janeiro">
+              <td class="p-3 font-bold text-azul-bic">7004615309</td>
+              <td class="p-3">Serviços de projeto, reparo e manutenção em motores e geradores elétricos</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">20/08/2026</td>
+              <td class="p-3">21/09/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+
+            <!-- PÁGINA 2 -->
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="2" data-abrangencia="Nacional" data-local="Macaé">
+              <td class="p-3 font-bold text-azul-bic">7004620110</td>
+              <td class="p-3">Manutenção preventiva em Bombas Centrífugas de Alta Pressão Subsea</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">01/09/2026</td>
+              <td class="p-3">15/11/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="2" data-abrangencia="Internacional" data-local="Rio de Janeiro">
+              <td class="p-3 font-bold text-azul-bic">7004622340</td>
+              <td class="p-3">Fornecimento de Cabos Umbilicais de Controle Submarino</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Internacional</td>
+              <td class="p-3">03/09/2026</td>
+              <td class="p-3">20/11/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="2" data-abrangencia="Nacional" data-local="Santos">
+              <td class="p-3 font-bold text-azul-bic">7004625890</td>
+              <td class="p-3">Serviços de Inspeção Não Destrutiva (LP/PM) em Plataformas Offshore</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">05/09/2026</td>
+              <td class="p-3">30/11/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="2" data-abrangencia="Nacional" data-local="Macaé">
+              <td class="p-3 font-bold text-azul-bic">7004629001</td>
+              <td class="p-3">Aquisição de Produtos Químicos para Tratamento de Água de Injeção</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">08/09/2026</td>
+              <td class="p-3">10/12/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+
+            <!-- PÁGINA 3 -->
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="3" data-abrangencia="Internacional" data-local="Rio de Janeiro">
+              <td class="p-3 font-bold text-azul-bic">7004631020</td>
+              <td class="p-3">Serviços Especializados de Calibração de Instrumentos de Mediçao</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Internacional</td>
+              <td class="p-3">10/09/2026</td>
+              <td class="p-3">18/12/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="3" data-abrangencia="Nacional" data-local="Santos">
+              <td class="p-3 font-bold text-azul-bic">7004634500</td>
+              <td class="p-3">Fornecimento de Equipamentos de Proteção Individual (EPI) Offshore</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">12/09/2026</td>
+              <td class="p-3">22/12/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="3" data-abrangencia="Nacional" data-local="Macaé">
+              <td class="p-3 font-bold text-azul-bic">7004638990</td>
+              <td class="p-3">Serviços de Logística e Transporte de Cargas Pesadas Intermodal</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">13/09/2026</td>
+              <td class="p-3">28/12/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+            <tr class="hover:bg-slate-50 item-oportunidade hidden" data-pagina="3" data-abrangencia="Nacional" data-local="Rio de Janeiro">
+              <td class="p-3 font-bold text-azul-bic">7004640100</td>
+              <td class="p-3">Sistemas de Automação e Controle de Válvulas Atuadas Eletricamente</td>
+              <td class="p-3 text-emerald-600 font-bold">Recebimento de Propostas</td>
+              <td class="p-3">Petróleo Brasileiro S.A.</td>
+              <td class="p-3">Nacional</td>
+              <td class="p-3">14/09/2026</td>
+              <td class="p-3">30/12/2026</td>
+              <td class="p-3 text-center"><button onclick="demostrarInteresse(this)" class="px-3 py-1.5 bg-verde-petronect text-white rounded text-[10px] font-bold shadow-sm hover:bg-lime-600">Tenho Interesse</button></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINAÇÃO -->
+      <div class="p-4 bg-white border border-slate-200 rounded-lg flex justify-center items-center gap-4 text-xs font-bold text-verde-petronect shadow-sm">
+        <button id="btn-anterior" onclick="mudarPagina(-1)" class="px-4 py-1.5 border border-slate-300 rounded-full text-slate-400 cursor-not-allowed" disabled>Anterior</button>
+        <span id="texto-pagina" class="text-slate-700">Página 1 de 3</span>
+        <button id="btn-proximo" onclick="mudarPagina(1)" class="px-4 py-1.5 border border-verde-petronect rounded-full bg-verde-petronect text-white hover:bg-lime-600 transition-colors">Próximo</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-azul-bic text-white py-8 text-center text-xs mt-12">
+    <div class="max-w-6xl mx-auto px-4 space-y-2">
+      <p class="font-bold">O Grupo Petrobras já poupou, até o momento, a emissão de 1.676,40 toneladas de CO2 por utilizar a Petronect.</p>
+      <p class="text-blue-200 opacity-80">CNX · Portal de Fornecedores da Petrobras</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    let paginaAtual = 1;
+    const totalPaginas = 3;
+
+    // LIMPA OS FILTROS E RECARREGA A PÁGINA AO CLICAR NA LOGO CNX
+    function recarregarELimparFiltros() {
+      document.getElementById('input-busca').value = '';
+      document.getElementById('select-abrangencia').value = '';
+      document.getElementById('select-local').value = '';
+      paginaAtual = 1;
+      atualizarExibicaoPagina();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function atualizarExibicaoPagina() {
+      const linhas = document.querySelectorAll('.item-oportunidade');
+      let contador = 0;
+
+      linhas.forEach(linha => {
+        const pag = parseInt(linha.getAttribute('data-pagina'));
+        if (pag === paginaAtual) {
+          linha.classList.remove('hidden');
+          contador++;
+        } else {
+          linha.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('texto-pagina').innerText = `Página ${paginaAtual} de ${totalPaginas}`;
+      document.getElementById('contador-resultados').innerText = `Exibindo página ${paginaAtual} (${contador} oportunidades por página)`;
+
+      const btnAnt = document.getElementById('btn-anterior');
+      const btnProx = document.getElementById('btn-proximo');
+
+      if (paginaAtual === 1) {
+        btnAnt.disabled = true;
+        btnAnt.className = "px-4 py-1.5 border border-slate-300 rounded-full text-slate-400 cursor-not-allowed";
+      } else {
+        btnAnt.disabled = false;
+        btnAnt.className = "px-4 py-1.5 border border-verde-petronect rounded-full text-verde-petronect hover:bg-lime-50 cursor-pointer";
+      }
+
+      if (paginaAtual === totalPaginas) {
+        btnProx.disabled = true;
+        btnProx.className = "px-4 py-1.5 border border-slate-300 rounded-full text-slate-400 cursor-not-allowed";
+      } else {
+        btnProx.disabled = false;
+        btnProx.className = "px-4 py-1.5 border border-verde-petronect rounded-full bg-verde-petronect text-white hover:bg-lime-600 cursor-pointer";
+      }
+    }
+
+    function mudarPagina(delta) {
+      const novaPagina = paginaAtual + delta;
+      if (novaPagina >= 1 && novaPagina <= totalPaginas) {
+        paginaAtual = novaPagina;
+        atualizarExibicaoPagina();
+      }
+    }
+
+    function filtrarEAtualizarPagina() {
+      const termo = document.getElementById('input-busca').value.toLowerCase();
+      const abrangencia = document.getElementById('select-abrangencia').value;
+      const local = document.getElementById('select-local').value;
+      const linhas = document.querySelectorAll('.item-oportunidade');
+
+      if (termo || abrangencia || local) {
+        let visiveis = 0;
+        linhas.forEach(linha => {
+          const txt = linha.innerText.toLowerCase();
+          const abr = linha.getAttribute('data-abrangencia');
+          const loc = linha.getAttribute('data-local');
+
+          const okBusca = txt.includes(termo);
+          const okAbr = !abrangencia || abr === abrangencia;
+          const okLoc = !local || loc === local;
+
+          if (okBusca && okAbr && okLoc) {
+            linha.classList.remove('hidden');
+            visiveis++;
+          } else {
+            linha.classList.add('hidden');
+          }
+        });
+        document.getElementById('contador-resultados').innerText = `Encontradas ${visiveis} oportunidades nos filtros`;
+      } else {
+        atualizarExibicaoPagina();
+      }
+    }
+
+    function demostrarInteresse(botao) {
+      botao.innerText = "✓ Registrado";
+      botao.className = "px-3 py-1.5 bg-slate-200 text-slate-700 rounded text-[10px] font-bold shadow-inner cursor-default";
+      botao.disabled = true;
+      alert("✅ Seu interesse nesta oportunidade foi registrado com sucesso!");
+    }
+
+    document.addEventListener('DOMContentLoaded', atualizarExibicaoPagina);
+  </script>
+</body>
+</html>

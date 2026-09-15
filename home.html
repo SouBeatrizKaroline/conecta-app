@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNX — Portal de Fornecedores</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen relative bg-slate-50">
+
+  <!-- BARRA SUPERIOR INSTITUCIONAL -->
+  <div class="bg-azul-bic text-white text-xs py-2 px-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <span>Somos o <strong>Portal de Compras da Petrobras</strong></span>
+      <div class="flex gap-4 items-center">
+        <span>Atendimento Especializado</span>
+        <span class="font-bold">CNX</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO COM MENU E BOTÃO DE LOGIN -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl font-black text-azul-bic tracking-tight">CNX</span>
+        <span class="text-slate-300">|</span>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Portal de Fornecedores</span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 font-bold text-sm text-verde-petronect">
+        <a href="#" class="hover:underline">A CNX</a>
+        <a href="#" class="hover:underline">Cadastro de Fornecedores</a>
+        <a href="#" class="hover:underline">Compras e Contratações</a>
+        <a href="#" class="hover:underline">Ajuda</a>
+      </nav>
+
+      <!-- BOTÃO DE LOGIN QUE ABRE A MODAL -->
+      <button onclick="abrirModalLogin()" class="px-5 py-2.5 bg-azul-bic text-white rounded-full text-xs font-bold hover:bg-blue-900 transition-colors shadow-sm">
+        LOGIN / ENTRAR
+      </button>
+    </div>
+  </header>
+
+  <!-- BANNER HERO -->
+  <section class="py-8 px-4">
+    <div class="max-w-6xl mx-auto bg-azul-bic text-white rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center z-10 relative">
+        <div class="md:col-span-2 space-y-4">
+          <span class="inline-block bg-verde-petronect text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            Aberto para Propostas
+          </span>
+          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            Portal de Compras & Oportunidades
+          </h1>
+          <p class="text-blue-100 text-sm md:text-base max-w-xl">
+            Acompanhe editais ativos, entenda as exigências de cada etapa e faça a pré-qualificação da sua empresa para participar das cotações do setor.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="scrollToForm()" class="px-6 py-3 bg-verde-petronect hover:bg-lime-600 text-white font-bold text-sm rounded-full shadow-lg transition-transform transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+              <span>Cadastre sua Empresa Agora</span>
+              <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+            </button>
+            <button onclick="abrirModalLogin()" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-full border border-white/30 transition-colors">
+              Já tenho conta (Login)
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm text-center">
+          <div class="w-12 h-12 bg-verde-petronect text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-xl">
+            300+
+          </div>
+          <h3 class="font-bold text-white text-sm">Oportunidades Mensais</h3>
+          <p class="text-xs text-blue-200 mt-1">Acesse os editais abertos no seu segmento de fornecimento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE NOVIDADES -->
+  <section class="py-10 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-6 border-b border-slate-200 pb-4 flex justify-between items-end">
+        <div>
+          <h2 class="text-2xl font-bold text-azul-bic">Novidades e Informações do Portal</h2>
+          <p class="text-slate-600 text-xs mt-1">Acompanhe atualizações para fornecedores do setor de óleo e gás.</p>
+        </div>
+        <span class="text-xs font-bold text-verde-petronect">Atualizado em Setembro/2026</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <article class="bg-white border-l-4 border-verde-petronect border-y border-r border-slate-200 rounded-r-xl p-5 shadow-sm">
+          <span class="text-xs font-bold text-verde-petronect uppercase tracking-wider">Atualização de Sistema</span>
+          <h3 class="text-base font-bold text-azul-bic mt-1 mb-2">Busca automática de dados por CNPJ</h3>
+          <p class="text-xs text-slate-600">O cadastro agora preenche razão social e endereço automaticamente via integração direta, reduzindo o tempo de preenchimento.</p>
+        </article>
+
+        <article class="bg-white border-l-4 border-azul-bic border-y border-r border-slate-200 rounded-r-xl p-5 shadow-sm">
+          <span class="text-xs font-bold text-azul-bic uppercase tracking-wider">Guia do Fornecedor</span>
+          <h3 class="text-base font-bold text-azul-bic mt-1 mb-2">Como acompanhar um edital até a proposta</h3>
+          <p class="text-xs text-slate-600">Um passo a passo completo de como ir da consulta inicial de um edital ativo até o envio final da sua proposta comercial.</p>
+        </article>
+
+        <article class="bg-white border-l-4 border-azul-bic border-y border-r border-slate-200 rounded-r-xl p-5 shadow-sm">
+          <span class="text-xs font-bold text-azul-bic uppercase tracking-wider">Aviso importante</span>
+          <h3 class="text-base font-bold text-azul-bic mt-1 mb-2">Novo fluxo de acompanhamento de status</h3>
+          <p class="text-xs text-slate-600">Fornecedores cadastrados passam a receber avisos automáticos sobre mudanças de status e pendências em suas propostas.</p>
+        </article>
+
+        <article class="bg-white border-l-4 border-verde-petronect border-y border-r border-slate-200 rounded-r-xl p-5 shadow-sm">
+          <span class="text-xs font-bold text-verde-petronect uppercase tracking-wider">Certificações</span>
+          <h3 class="text-base font-bold text-azul-bic mt-1 mb-2">Documentos exigidos por segmento</h3>
+          <p class="text-xs text-slate-600">Consulte quais certificações e termos técnicos são pedidos conforme a categoria de fornecimento da sua empresa.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIEW COM BLUR DE EDITAIS -->
+  <div class="relative py-8 px-4">
+    <div class="max-w-6xl mx-auto blur-md opacity-25 pointer-events-none select-none">
+      <h2 class="text-xl font-bold text-azul-bic mb-4">Editais e Cotações em Aberto</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-slate-300">
+          <h3 class="font-bold text-azul-bic">Cotação #892: Válvulas Industriais</h3>
+          <p class="text-xs text-slate-600">Exige pré-qualificação ativa...</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-300">
+          <h3 class="font-bold text-azul-bic">Cotação #901: Manutenção Offshore</h3>
+          <p class="text-xs text-slate-600">Atendimento presencial em plataformas...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="bg-white border-2 border-verde-petronect rounded-2xl p-6 text-center max-w-md shadow-2xl">
+        <div class="w-12 h-12 bg-lime-100 text-verde-petronect rounded-full flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="lock" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-azul-bic mb-1">Acesso Restrito a Fornecedores</h3>
+        <p class="text-xs text-slate-600 mb-5">Conclua o onboarding em menos de 3 minutos para liberar o acesso ao painel de oportunidades.</p>
+        <button onclick="scrollToForm()" class="w-full py-3 bg-verde-petronect hover:bg-lime-600 text-white rounded-full text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-colors">
+          <span>Ir para o Formulário de Cadastro</span>
+          <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO DO FORMULÁRIO DE CADASTRO -->
+  <section id="formSection" class="pt-12 pb-16 scroll-mt-8 flex justify-center p-4 md:p-8">
+    <div class="max-w-3xl w-full bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8">
+      
+      <div class="mb-6 border-b border-slate-100 pb-4 flex justify-between items-center flex-wrap gap-2">
+        <div>
+          <h1 class="text-2xl font-bold text-azul-bic">Cadastro para Pré-Qualificação (PQSB/PQOB)</h1>
+          <p class="text-slate-500 text-sm mt-1">Novo fornecedor? Preencha os campos abaixo para se cadastrar.</p>
+        </div>
+        <button onclick="abrirModalLogin()" class="text-xs font-bold text-verde-petronect hover:underline">
+          Já tem conta? Clique aqui para Entrar
+        </button>
+      </div>
+
+      <!-- TRILHA FLUIDA DA PROGRESSÃO -->
+      <div class="relative flex justify-between items-center my-8 px-2 md:px-6">
+        <svg class="absolute inset-0 w-full h-full pointer-events-none -z-0 stroke-slate-300 stroke-2 [stroke-dasharray:6,6]" style="top: -10px;">
+          <path d="M 60 40 C 180 10, 220 70, 340 40 C 460 10, 500 80, 620 50" fill="none"/>
+        </svg>
+
+        <div id="step-node-1" class="flex flex-col items-center z-10">
+          <div id="step-icon-1" class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-azul-bic border-4 border-verde-petronect text-white flex items-center justify-center shadow-md">
+            <i data-lucide="building-2" class="w-6 h-6 md:w-7 md:h-7"></i>
+          </div>
+          <span class="text-xs md:text-sm font-bold text-slate-800 mt-2">1. Sua empresa</span>
+          <span id="step-status-1" class="text-[10px] md:text-xs font-semibold text-verde-petronect">Você está aqui</span>
+        </div>
+
+        <div id="step-node-2" class="flex flex-col items-center z-10 opacity-60">
+          <div id="step-icon-2" class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-slate-100 border border-slate-300 text-slate-400 flex items-center justify-center">
+            <i data-lucide="user" class="w-6 h-6 md:w-7 md:h-7"></i>
+          </div>
+          <span class="text-xs md:text-sm font-semibold text-slate-500 mt-2">2. Responsável</span>
+          <span id="step-status-2" class="text-[10px] md:text-xs font-semibold text-slate-400">Aguardando</span>
+        </div>
+
+        <div id="step-node-3" class="flex flex-col items-center z-10 opacity-60">
+          <div id="step-icon-3" class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-slate-100 border border-slate-300 text-slate-400 flex items-center justify-center">
+            <i data-lucide="sliders" class="w-6 h-6 md:w-7 md:h-7"></i>
+          </div>
+          <span class="text-xs md:text-sm font-semibold text-slate-500 mt-2">3. Preferências</span>
+          <span id="step-status-3" class="text-[10px] md:text-xs font-semibold text-slate-400">Aguardando</span>
+        </div>
+
+        <div id="step-node-4" class="flex flex-col items-center z-10 opacity-60">
+          <div id="step-icon-4" class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-slate-100 border border-slate-300 text-slate-400 flex items-center justify-center">
+            <i data-lucide="clipboard-check" class="w-6 h-6 md:w-7 md:h-7"></i>
+          </div>
+          <span class="text-xs md:text-sm font-semibold text-slate-500 mt-2">4. Revisão</span>
+          <span id="step-status-4" class="text-[10px] md:text-xs font-semibold text-slate-400">Aguardando</span>
+        </div>
+      </div>
+
+      <form id="onboarding-form" class="bg-slate-50 rounded-xl p-6 border border-slate-200 space-y-4" onsubmit="event.preventDefault();">
+        
+        <!-- PASSO 1: DADOS DA EMPRESA -->
+        <div id="form-step-1" class="space-y-4">
+          <div class="border-b border-slate-200 pb-2 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-azul-bic">1. Dados da Empresa</h3>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-medium flex items-center gap-1">
+              <i data-lucide="zap" class="w-3 h-3"></i> Autopreenchimento ativado
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">CNPJ (Busca Automática) *</label>
+              <div class="flex gap-2">
+                <input type="text" id="cnpj" name="cnpj" data-tipo="cnpj" placeholder="00.000.000/0001-00" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+                <button type="button" onclick="consultarCNPJ()" class="px-4 py-2.5 bg-azul-bic text-white rounded-lg text-sm font-bold hover:bg-blue-900 whitespace-nowrap">
+                  Buscar Dados
+                </button>
+              </div>
+              <p id="cnpj-loading" class="text-xs text-blue-700 hidden mt-1">Consultando Receita Federal...</p>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Inscrição Estadual *</label>
+              <input type="text" id="ie" name="ie" data-tipo="texto" placeholder="Isento ou Nº" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">E-mail Corporativo *</label>
+              <input type="email" id="empresa-email" name="empresa_email" data-tipo="email" placeholder="contato@empresa.com.br" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Telefone *</label>
+              <input type="text" id="empresa-telefone" name="empresa_telefone" data-tipo="telefone" placeholder="(00) 0000-0000" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Tributação *</label>
+              <select id="tributacao" name="tributacao" data-tipo="texto" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+                <option value="">Selecione...</option>
+                <option value="simples">Simples Nacional</option>
+                <option value="presumido">Lucro Presumido</option>
+                <option value="real">Lucro Real</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Endereço da Sede *</label>
+              <input type="text" id="endereco" name="endereco" data-tipo="texto" placeholder="Logradouro, Bairro, Cidade - UF" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Segmento Principal de Fornecimento *</label>
+              <select id="segmento" name="segmento" data-tipo="texto" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-900">
+                <option value="">Selecione seu segmento...</option>
+                <option value="valvulas">Válvulas e Tubulações Industriais</option>
+                <option value="offshore">Equipamentos e Serviços Offshore</option>
+                <option value="eletrica">Manutenção Elétrica e Automação</option>
+                <option value="hseq">Serviços de Segurança e HSEQ</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-4">
+            <button type="button" onclick="nextStep(2)" class="px-6 py-2.5 bg-azul-bic text-white rounded-lg text-sm font-bold hover:bg-blue-900 shadow-sm flex items-center gap-2">
+              Avançar para Responsável &gt;
+            </button>
+          </div>
+        </div>
+
+        <!-- PASSO 2: RESPONSÁVEL -->
+        <div id="form-step-2" class="space-y-4 hidden">
+          <div class="border-b border-slate-200 pb-2 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-azul-bic">2. Dados do(s) Responsável(eis) Legal(ais) / Sócios</h3>
+            <span class="text-xs text-slate-500">Adicione um ou mais representantes</span>
+          </div>
+
+          <div id="representantes-container" class="space-y-4"></div>
+
+          <div class="pt-2">
+            <button type="button" onclick="adicionarRepresentante()" class="w-full py-2.5 border-2 border-dashed border-azul-bic text-azul-bic hover:bg-blue-50 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="user-plus" class="w-4 h-4"></i> + Adicionar outro responsável legal / sócio
+            </button>
+          </div>
+
+          <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+            <button type="button" onclick="nextStep(1)" class="px-5 py-2.5 text-slate-600 text-sm font-bold hover:text-slate-900">
+              &lt; Voltar
+            </button>
+            <button type="button" onclick="nextStep(3)" class="px-6 py-2.5 bg-azul-bic text-white rounded-lg text-sm font-bold hover:bg-blue-900 shadow-sm">
+              Avançar para Preferências &gt;
+            </button>
+          </div>
+        </div>
+
+        <!-- PASSO 3: QUESTÕES LEGAIS & LGPD (Inicia bloqueado por padrão) -->
+        <div id="form-step-3" class="space-y-4 hidden">
+          <div class="border-b border-slate-200 pb-2">
+            <h3 class="text-lg font-bold text-azul-bic">3. Questões Legais e Comunicação</h3>
+          </div>
+
+          <div class="space-y-4 pt-2">
+            <div class="p-4 bg-white border border-slate-300 rounded-lg space-y-2">
+              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-500"></i> Avisos LGPD (Conformidade Legal)
+              </h4>
+              <p class="text-xs text-slate-600">
+                Concordo com o tratamento dos dados da empresa e do(s) representante(s) legal(ais) para fins de cadastro, participação em licitações e verificação de compliance no Portal CNX.
+              </p>
+
+              <label class="flex items-center gap-2 pt-2 cursor-pointer">
+                <input type="checkbox" id="lgpd-check" onchange="toggleLGPDWarning(this)" class="w-4 h-4 accent-azul-bic">
+                <span class="text-xs font-bold text-slate-800">Concordo com os termos da LGPD *</span>
+              </label>
+
+              <p id="lgpd-warning" class="text-xs text-rose-600 font-bold hidden">
+                ⚠️ Caso não concorde com os termos da LGPD, a empresa não poderá prosseguir.
+              </p>
+            </div>
+
+            <div class="p-4 bg-white border border-slate-300 rounded-lg space-y-2">
+              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="bell" class="w-4 h-4 text-azul-bic"></i> Alertas de Oportunidades
+              </h4>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 accent-azul-bic">
+                <span class="text-xs text-slate-700 font-medium">Desejo receber avisos automáticos sobre novos editais no meu segmento.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center pt-4">
+            <button type="button" onclick="nextStep(2)" class="px-5 py-2.5 text-slate-600 text-sm font-bold hover:text-slate-900">
+              &lt; Voltar
+            </button>
+            <button type="button" id="btn-step-3-next" onclick="nextStep(4)" disabled class="px-6 py-2.5 bg-azul-bic text-white rounded-lg text-sm font-bold shadow-sm opacity-50 cursor-not-allowed">
+              Avançar para Revisão &gt;
+            </button>
+          </div>
+        </div>
+
+        <!-- PASSO 4: REVISÃO E ENVIO -->
+        <div id="form-step-4" class="space-y-4 hidden">
+          <div class="border-b border-slate-200 pb-2">
+            <h3 class="text-lg font-bold text-azul-bic">4. Revisão e Finalização</h3>
+          </div>
+
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 space-y-1">
+            <p class="font-bold">✓ Todos os campos essenciais foram validados com sucesso!</p>
+            <p>Ao concluir, seu cadastro será ativado e você acessará a Lista de Oportunidades Abertas.</p>
+          </div>
+
+          <div class="flex justify-between items-center pt-4">
+            <button type="button" onclick="nextStep(3)" class="px-5 py-2.5 text-slate-600 text-sm font-bold hover:text-slate-900">
+              &lt; Voltar
+            </button>
+            <button type="button" onclick="finalizarCadastro()" class="px-8 py-2.5 bg-verde-petronect hover:bg-lime-600 text-white rounded-lg text-sm font-bold shadow-md">
+              Concluir Cadastro com Sucesso 🎉
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+  <!-- MODAL DE LOGIN -->
+  <div id="modal-login" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-6 relative">
+      
+      <button onclick="fecharModalLogin()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-lg">
+        ✕
+      </button>
+
+      <div class="text-center mb-6">
+        <span class="text-3xl font-black text-azul-bic tracking-tight">CNX</span>
+        <h2 class="text-xl font-bold text-slate-800 mt-2">Acesse sua Conta de Fornecedor</h2>
+        <p class="text-xs text-slate-500 mt-1">Informe seu CNPJ cadastrado e e-mail para entrar no portal.</p>
+      </div>
+
+      <form id="form-login" onsubmit="realizarLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">CNPJ Cadastrado *</label>
+          <input type="text" id="login-cnpj" placeholder="00.000.000/0001-00" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs outline-none focus:border-blue-900">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">E-mail Corporativo *</label>
+          <input type="email" id="login-email" placeholder="usuario@empresa.com.br" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs outline-none focus:border-blue-900">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-azul-bic hover:bg-blue-900 text-white font-bold text-xs rounded-lg shadow-md transition-colors">
+          ENTRAR NO PAINEL
+        </button>
+
+        <div class="text-center pt-2">
+          <button type="button" onclick="fecharModalLogin(); scrollToForm();" class="text-xs text-verde-petronect font-bold hover:underline">
+            Ainda não tem cadastro? Clique aqui para se cadastrar
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-azul-bic text-white py-8 text-center text-xs">
+    <div class="max-w-6xl mx-auto px-4 space-y-2">
+      <p class="font-bold">CNX · Portal de Fornecedores da Petrobras</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

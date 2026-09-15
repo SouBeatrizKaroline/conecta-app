@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+h1, h2, h3, h4, .font-petronect, button, nav {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", Arial, sans-serif !important;
+}
+
+.bg-azul-bic {
+  background-color: #1E40AF;
+}
+
+.text-azul-bic {
+  color: #1E40AF;
+}
+
+.bg-verde-petronect {
+  background-color: #65A30D;
+}
+
+.text-verde-petronect {
+  color: #65A30D;
+}
