@@ -1,0 +1,9 @@
+package-lock.json
+node_modules/
+data/
+.env
+home.html
+index.html
+oportunidades.html
+script.js
+styles.css

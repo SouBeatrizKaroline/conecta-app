@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conecta • Jornada demonstrativa</title>
+    <link rel="stylesheet" href="integration/demo.css" />
+    <script type="module" src="integration/demo.js"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="demo.html">conecta<span> / jornada</span></a
+      ><span class="badge">Equipe 05 · Protótipo</span>
+    </header>
+    <main>
+      <p class="eyebrow">HACKATHON CONEXÃO ANCESTRAL</p>
+      <h1>Todo acesso pode<br />abrir um novo caminho.</h1>
+      <p class="lead">
+        Explore uma jornada fictícia e veja suas interações chegarem ao painel de análise.
+      </p>
+      <p class="notice">
+        Dados simulados. Sem integração com o Portal Petronect. Esta página separada demonstra a
+        API; as telas originais continuam em desenvolvimento.
+      </p>
+      <div class="layout">
+        <section>
+          <h2>01 / Comece por aqui</h2>
+          <form id="start">
+            <label for="api">Endereço da API</label
+            ><input id="api" type="url" value="http://127.0.0.1:3000" required /><label
+              for="profile"
+              >Perfil fictício</label
+            ><select id="profile">
+              <option value="demo-01">Empresa demonstrativa 01 · Energia</option>
+              <option value="demo-02">Empresa demonstrativa 02 · Tecnologia</option>
+              <option value="demo-03">Empresa demonstrativa 03 · Serviços</option></select
+            ><label class="check"
+              ><input id="consent" type="checkbox" required /> Quero registrar as interações desta
+              demonstração.</label
+            ><button id="start-session">Iniciar jornada</button>
+          </form>
+          <p class="small">
+            A sessão fica apenas na memória desta página. Nenhum dado de formulário das telas
+            originais é coletado.
+          </p>
+        </section>
+        <section>
+          <h2>02 / Seu próximo passo</h2>
+          <fieldset id="journey" disabled>
+            <legend>Interações da jornada</legend>
+            <button data-event="click" data-page="oportunidades" data-target="explorar">
+              Explorar oportunidades</button
+            ><button data-event="click" data-page="ajuda" data-target="ajuda">Pedir ajuda</button
+            ><button data-event="preference" data-page="preferencias" data-target="energia">
+              Interesse em energia</button
+            ><button data-event="journey_completed" data-page="preferencias" data-target="concluir">
+              Concluir jornada demonstrativa</button
+            ><button class="secondary" id="revoke">
+              Desativar coleta e remover eventos da sessão
+            </button>
+          </fieldset>
+        </section>
+      </div>
+      <p id="status" role="status" aria-live="polite">
+        Inicie a API em modo local para registrar eventos.
+      </p>
+      <nav>
+        <a href="http://127.0.0.1:8081">Abrir Conecta Analytics ↗</a
+        ><a href="home.html">Ver frontend original em desenvolvimento ↗</a>
+      </nav>
+    </main>
+    <footer>Conecta · Petronect + KODIE Academy · Equipe 05 · Ambiente de hackathon</footer>
+  </body>
+</html>
