@@ -32,8 +32,8 @@ export class ConectaClient {
       signal: AbortSignal.timeout(8000),
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error?.message ?? 'Não foi possível acessar a API.');
-    return data;
+    if (!response.ok) throw new Error(data.message ?? data.error?.message ?? 'Não foi possível acessar a API.');
+    return data?.success === true && 'data' in data ? data.data : data;
   }
   async start(profileId, analyticsConsent) {
     this.session = await this.request('/sessions', {
