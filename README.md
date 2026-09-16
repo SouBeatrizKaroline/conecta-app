@@ -84,3 +84,7 @@ Outbound IPs compartilhados informados pelo Render para saídas do serviço: `74
 ## Limites
 
 O app é um protótipo de hackathon. O login visual segue demonstrativo no navegador; autenticação administrativa real fica no backend e no Analytics. Não há integração com Portal Petronect real, envio de campanha, CRM ou base produtiva.
+
+## Branches
+
+`main` é a versão publicada do App. `develop` acompanha a `main` para integração e validação. Branches de trabalho devem ser criadas apenas durante uma mudança e removidas após o merge.
