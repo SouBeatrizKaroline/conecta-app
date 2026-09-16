@@ -12,6 +12,7 @@ const allowed = new Set([
   'styles.css',
   'integration/client.js',
   'integration/demo.js',
+  'integration/tracking.js',
   'integration/demo.css',
 ]);
 const port = Number(process.env.PORT ?? 8080);

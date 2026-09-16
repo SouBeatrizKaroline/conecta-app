@@ -4,9 +4,9 @@
 
 **Conecta transforma acessos em jornadas e jornadas em próximos passos relevantes.**
 
-Frontend principal da Equipe 05 para o Hackathon Conexão Ancestral. Este repositório preserva o código do frontend informado pela equipe e acrescenta documentação profissional e uma integração demonstrativa isolada.
+Frontend principal da Equipe 05 para o Hackathon Conexão Ancestral. Este repositório preserva o design informado pela equipe e acrescenta documentação profissional e instrumentação demonstrativa integrada.
 
-> **Estado atual:** home.html, index.html, oportunidades.html, script.js e styles.css foram preservados byte a byte na revisão de origem. A integração funcional com a nova API está em **demo.html + integration/**. As telas originais ainda não enviam eventos ao backend novo. O login e a conclusão do cadastro originais são simulações de interface, não autenticação real.
+> **Estado atual:** o layout, os estilos e o comportamento visual das telas principais foram preservados. `home.html` e `oportunidades.html` agora carregam `integration/tracking.js`, que registra categorias de páginas e cliques somente após adesão explícita. A integração detalhada também pode ser exercitada em **demo.html + integration/**. O login e a conclusão do cadastro continuam sendo simulações de interface, não autenticação real.
 
 **Explore:** [Arquitetura](docs/ARCHITECTURE.md) · [Contrato da API](docs/API.md) · [Dados e métricas](docs/DATA-MODEL.md) · [Execução integrada](docs/INTEGRATION.md) · [Produto e identidade](docs/PRODUCT.md) · [Roadmap](docs/ROADMAP.md) · [Contribuição](CONTRIBUTING.md) · [Segurança](SECURITY.md) · [Verificação](docs/VERIFICATION.md)
 
@@ -30,7 +30,7 @@ Fonte do escopo: material enviado pela equipe, _Slides_Abertura_Hackathon_Conexa
 
 | Repositório                                                                  | Responsabilidade                                                  | Execução local                  |
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------- |
-| [conecta-app](https://github.com/SouBeatrizKaroline/conecta-app)             | Frontend do usuário preservado e integração demonstrativa isolada | http://127.0.0.1:8080/demo.html |
+| [conecta-app](https://github.com/SouBeatrizKaroline/conecta-app)             | Frontend preservado e coleta consentida de eventos demonstrativos | http://127.0.0.1:8080/home.html |
 | [conecta-api](https://github.com/SouBeatrizKaroline/conecta-api)             | Coleta, armazenamento, processamento, API e exportação            | http://127.0.0.1:3000/health    |
 | [conecta-analytics](https://github.com/SouBeatrizKaroline/conecta-analytics) | Visão gerencial, jornadas, sinais e gestão de ações               | http://127.0.0.1:8081           |
 
@@ -59,7 +59,7 @@ O Analytics consulta a API por HTTP e atualiza sob demanda. Não há conexão di
 | Login e conclusão visual                                 | Estado local no navegador; não valida identidade no servidor                          |
 | Jornada demonstrativa                                    | Cria sessão fictícia, registra acesso/cliques/interesse/conclusão e consulta contexto |
 | Desativar coleta                                         | Remove eventos da sessão demonstrativa na API                                         |
-| Instrumentação das telas principais                      | Planejada após estabilização, não ativada                                             |
+| Instrumentação das telas principais                      | Ativa após consentimento; registra página/categoria, nunca o conteúdo dos formulários |
 
 ## Estrutura
 
@@ -70,6 +70,7 @@ O Analytics consulta a API por HTTP e atualiza sob demanda. Não há conexão di
 ├── integration/
 │   ├── client.js                                # Cliente de sessão e eventos
 │   ├── demo.js                                  # Interações explícitas da demo
+│   ├── tracking.js                              # Instrumentação discreta das telas principais
 │   └── demo.css                                 # Estilo exclusivo da demo
 ├── scripts/serve.js                             # Servidor local, arquivos permitidos
 ├── docs/                                        # Arquitetura, contrato e produto
@@ -78,9 +79,9 @@ O Analytics consulta a API por HTTP e atualiza sob demanda. Não há conexão di
 
 ## Tecnologias e integração
 
-HTML organiza as páginas; CSS3/Tailwind compõem o visual herdado; **JavaScript** implementa o comportamento. O cliente novo usa módulos ES e fetch, sem framework adicional. Tokens de sessão ficam apenas em memória. Os campos de formulário, CPF, CNPJ, e-mail e texto livre nunca são lidos pelo cliente de eventos.
+HTML organiza as páginas; CSS3/Tailwind compõem o visual herdado; **JavaScript** implementa o comportamento. O cliente novo usa módulos ES e fetch, sem framework adicional. Tokens de sessão ficam somente no `sessionStorage`. Os campos de formulário, CPF, CNPJ, e-mail e texto livre nunca são lidos pelo cliente de eventos.
 
-Para futura instrumentação, importe ConectaClient de integration/client.js, crie uma sessão após adesão explícita e chame track com os valores do catálogo. Não inclua scripts de coleta em todas as páginas antes de revisar o desenho da jornada. O primeiro repositório continua sendo a frente em desenvolvimento da equipe.
+`integration/tracking.js` cria ou restaura uma sessão demonstrativa somente após o aceite existente na etapa LGPD. A instrumentação registra `page_view`, categorias de clique, preferência e conclusão; não lê nem envia busca, CNPJ, CPF, e-mail, telefone, nome ou texto livre. O primeiro repositório continua sendo a frente em desenvolvimento da equipe e seu design não foi alterado.
 
 ## Equipe 05
 

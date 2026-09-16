@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node scripts/serve.js",
-    "check": "node --check integration/client.js && node --check integration/demo.js",
+    "check": "node --check integration/client.js && node --check integration/demo.js && node --check integration/tracking.js",
     "test": "node --test",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
