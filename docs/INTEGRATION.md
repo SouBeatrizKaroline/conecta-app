@@ -1,5 +1,7 @@
 # Executar os três sistemas
 
+As telas `home.html` e `oportunidades.html` carregam `integration/tracking.js`. Após o aceite explícito na etapa LGPD, o navegador cria uma sessão fictícia na API, registra páginas e categorias controladas de interação e preserva o token somente no `sessionStorage` para acompanhar a navegação entre as duas páginas. Nenhum valor de formulário, busca ou identificação é lido pelo rastreador.
+
 ## Requisitos
 
 Git, Node.js 24.x e npm. Banco SQLite embutido no Node: não é necessário instalar MariaDB para esta versão. Alguns Node 24 emitem aviso de API experimental para node:sqlite; mantenha a versão documentada. Os frontends novos não exigem build ou CDN; as telas herdadas dependem de CDNs externos para Tailwind/Lucide/fontes.

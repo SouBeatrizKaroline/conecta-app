@@ -1,8 +1,25 @@
 // Integração isolada: nunca lê formulários, texto livre, CPF, CNPJ ou e-mail.
 export class ConectaClient {
-  constructor(baseUrl = 'http://127.0.0.1:3000') {
+  constructor(baseUrl = 'http://127.0.0.1:3000', storage = null) {
     this.baseUrl = baseUrl.replace(/\/$/, '');
     this.session = null;
+    this.storage = storage;
+    this.restore();
+  }
+  restore() {
+    if (!this.storage) return null;
+    try {
+      const saved = JSON.parse(this.storage.getItem('conecta.session'));
+      if (saved?.id && saved?.token) this.session = saved;
+    } catch {
+      this.storage.removeItem('conecta.session');
+    }
+    return this.session;
+  }
+  save() {
+    if (!this.storage) return;
+    if (this.session) this.storage.setItem('conecta.session', JSON.stringify(this.session));
+    else this.storage.removeItem('conecta.session');
   }
   async request(path, { method = 'GET', body } = {}) {
     const response = await fetch(`${this.baseUrl}/api/v1${path}`, {
@@ -23,6 +40,7 @@ export class ConectaClient {
       method: 'POST',
       body: { profileId, analyticsConsent },
     });
+    this.save();
     return this.session;
   }
   async track(type, page, target) {
@@ -46,6 +64,7 @@ export class ConectaClient {
       body: { analyticsConsent: false },
     });
     this.session = null;
+    this.save();
     return result;
   }
 }

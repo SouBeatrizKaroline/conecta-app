@@ -42,3 +42,22 @@ test('cliente só coleta após iniciar sessão e encerra coleta após retirada',
   ]);
   assert.deepEqual(received[2].body, { analyticsConsent: false });
 });
+
+test('cliente preserva a sessão apenas no armazenamento recebido', async (t) => {
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+    removeItem: (key) => values.delete(key),
+  };
+  const server = createServer(async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ id: 'restored-session', token: 'session-only' }));
+  }).listen(0, '127.0.0.1');
+  await new Promise((resolve) => server.once('listening', resolve));
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const url = `http://127.0.0.1:${server.address().port}`;
+  const first = new ConectaClient(url, storage);
+  await first.start('demo-01', true);
+  assert.deepEqual(new ConectaClient(url, storage).session, first.session);
+});
